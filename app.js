@@ -5,6 +5,8 @@ const exphbs = require('express-handlebars')
 const app = express()
 const port = '3000'
 
+// 載入todo model
+const todo = require('./models/todo')
 mongoose.connect('mongodb://localhost/todo-list')
 // 取得資料庫連線狀態
 const db = mongoose.connection
@@ -22,7 +24,10 @@ app.set('view engine', 'hbs')
 
 
 app.get('/', (req, res) => {
-  res.render('index')
+  todo.find()
+  .lean()
+  .then(todos => res.render('index', {todos: todos}))  
+  .catch(error => console.error(error))
 })
 
 app.listen(port, () => {
