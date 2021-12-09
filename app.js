@@ -7,7 +7,7 @@ const app = express()
 const port = '3000'
 
 // 載入todo model
-const todo = require('./models/todo')
+const Todo = require('./models/todo')
 mongoose.connect('mongodb://localhost/todo-list')
 // 取得資料庫連線狀態
 const db = mongoose.connection
@@ -41,7 +41,9 @@ app.post('/todos', (req, res) => {
   // const todo = new Todo({ name })
 
   // return todo.save('name')
-  return todo.create({ name })
+  // .then(()=> res.redirect('/'))
+  // .catch(error => console.log(error))
+  return Todo.create({ name })
     .then(()=> res.redirect('/'))
     .catch(error => console.log(error))
 })
