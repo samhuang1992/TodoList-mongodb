@@ -77,7 +77,7 @@ app.post('/todos/:id/edit', (req, res) => {
     .then(() => res.redirect(`/todos/${id}`))
     .catch(error => console.log(error))
 }) 
-// Remove
+// Remove post URL
 app.post('/todos/:id/delete', (req, res) => {
   const id = req.params.id
   return Todo.findById(id)
