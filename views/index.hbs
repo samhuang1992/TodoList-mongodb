@@ -1,9 +1,9 @@
-<a href="./todos/new">click</a>
 <ul>
   {{#each todos}}
     <li>
       {{ this.name }}
       <a href="./todos/{{ this._id }}">Detail</a>
+      <a href="./todos/{{ this._id }}/edit">Edit</a>
     </li>
   {{/each}}
 </ul>
