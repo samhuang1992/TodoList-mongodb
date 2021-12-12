@@ -32,6 +32,7 @@ app.get('/', (req, res) => {
   .catch(error => console.error(error))
 })
 
+// add new 
 app.get('/todos/new', (req, res) => {
   return res.render('new')
 })
@@ -56,6 +57,7 @@ app.get('/todos/:id', (req,res) => {
   .catch(error => console.log(error))
 })
 
+// update get URL
 app.get('/todos/:id/edit', (req,res) => {
   const id = req.params.id
   return Todo.findById(id)
@@ -63,7 +65,7 @@ app.get('/todos/:id/edit', (req,res) => {
   .then((todo) => res.render('edit', { todo }))
   .catch(error => console.log(error))
 })
-
+// update post URL
 app.post('/todos/:id/edit', (req, res) => {
   const name = req.body.name
   const id = req.params.id
@@ -75,6 +77,14 @@ app.post('/todos/:id/edit', (req, res) => {
     .then(() => res.redirect(`/todos/${id}`))
     .catch(error => console.log(error))
 }) 
+// Remove
+app.post('/todos/:id/delete', (req, res) => {
+  const id = req.params.id
+  return Todo.findById(id)
+    .then(todo => todo.remove())
+    .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
+})
 
 app.listen(port, () => {
   console.log(`App.js is running on http://locoalhost${port}`)
