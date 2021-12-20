@@ -32,15 +32,15 @@ app.get('/', (req, res) => {
   .catch(error => console.error(error))
 })
 
-// add new 
+// get new 
 app.get('/todos/new', (req, res) => {
   return res.render('new')
 })
-
+// post new
 app.post('/todos', (req, res) => {
   const name = req.body.name
+  // 方法一
   // const todo = new Todo({ name })
-
   // return todo.save('name')
   // .then(()=> res.redirect('/'))
   // .catch(error => console.log(error))
@@ -67,11 +67,13 @@ app.get('/todos/:id/edit', (req,res) => {
 })
 // update post URL
 app.post('/todos/:id/edit', (req, res) => {
-  const name = req.body.name
+  const {name, isDone} = req.body //解構賦值, 一次定義好req.body內的變數 
   const id = req.params.id
   return Todo.findById(id)
     .then(todo => {
       todo.name = name
+      //運算子優先序, 先比 isDone ==='on', 再將結果比對todo.isDone
+      todo.isDone = isDone === 'on' 
       return todo.save()
     })
     .then(() => res.redirect(`/todos/${id}`))
