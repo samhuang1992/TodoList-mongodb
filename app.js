@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
+const methodOverride = require('method-override')
 
 const app = express()
 const port = '3000'
@@ -24,6 +25,7 @@ app.engine('hbs', exphbs({defultLayout:'main', extname: '.hbs'}))
 app.set('view engine', 'hbs')
 
 app.use(bodyParser.urlencoded({extended: true}))
+app.use(methodOverride('_method'))
 
 app.get('/', (req, res) => {
   Todo.find()
@@ -67,7 +69,7 @@ app.get('/todos/:id/edit', (req,res) => {
   .catch(error => console.log(error))
 })
 // update post URL
-app.post('/todos/:id/edit', (req, res) => {
+app.put('/todos/:id', (req, res) => {
   const {name, isDone} = req.body //解構賦值, 一次定義好req.body內的變數 
   const id = req.params.id
   return Todo.findById(id)
@@ -81,7 +83,7 @@ app.post('/todos/:id/edit', (req, res) => {
     .catch(error => console.log(error))
 }) 
 // Remove post URL
-app.post('/todos/:id/delete', (req, res) => {
+app.delete('/todos/:id', (req, res) => {
   const id = req.params.id
   return Todo.findById(id)
     .then(todo => todo.remove())
