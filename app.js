@@ -4,7 +4,9 @@ const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const routes = require('./routes')
 const app = express()
-const port = '3000'
+// 如果在 Heroku 環境則使用 process.env.PORT
+// 否則為本地環境，使用 3000 
+const port = process.env.port || 3000
 // 載入mongoose.js
 require('./config/mongoose')
 
