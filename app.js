@@ -28,6 +28,14 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(methodOverride('_method'))
 // userPassport呼叫app要放在路由前面
 usePassport(app)
+
+// 設定本地變數res.locals , 將資料交接給res用
+app.use((req, res, next)=> {
+  res.locals.isAuthenticated = req.isAuthenticated()
+  res.locals.user = req.user
+  next()
+})
+
 app.use(routes)
 
 app.listen(PORT, () => {
