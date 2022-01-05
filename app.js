@@ -4,23 +4,30 @@ const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const routes = require('./routes')
+// userPassport設定檔要放在session後面
+const usePassport = require('./config/passport')
+// 載入mongoose.js
+require('./config/mongoose')
 const app = express()
 // 如果在 Heroku 環境則使用 process.env.PORT
 // 否則為本地環境，使用 3000 
 const PORT = process.env.PORT || 3000
-// 載入mongoose.js
-require('./config/mongoose')
+
+
 
 app.engine('hbs', exphbs({defultLayout:'main', extname: '.hbs'}))
 app.set('view engine', 'hbs')
 
 app.use(session({
-  secret: 'ThisIsMySecret',
+  secret: 'MySecret',
   resave: false,
   saveUninitialized: true
 }))
+
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(methodOverride('_method'))
+// userPassport呼叫app要放在路由前面
+usePassport(app)
 app.use(routes)
 
 app.listen(PORT, () => {
