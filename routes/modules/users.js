@@ -20,7 +20,7 @@ router.get('/register', (req, res) => {
 router.post('/register', (req, res) => {
   const { name, email, password, confirmPassword } = req.body
   USER.findOne({ email }).then(user => {
-    console.log(user)
+    // console.log(user)
     if (user) {
       console.log('User already exists.')
       res.render('register', {
