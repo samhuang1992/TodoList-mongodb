@@ -5,6 +5,11 @@ const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const flash = require('connect-flash')
 const routes = require('./routes')
+
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+console.log(process.env)
 // userPassport設定檔要放在session後面
 const usePassport = require('./config/passport')
 // 載入mongoose.js
@@ -12,7 +17,7 @@ require('./config/mongoose')
 const app = express()
 // 如果在 Heroku 環境則使用 process.env.PORT
 // 否則為本地環境，使用 3000 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT
 
 
 
