@@ -6,10 +6,11 @@ const methodOverride = require('method-override')
 const flash = require('connect-flash')
 const routes = require('./routes')
 
+// 載入.env
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
-console.log(process.env)
+// console.log(process.env)
 // userPassport設定檔要放在session後面
 const usePassport = require('./config/passport')
 // 載入mongoose.js

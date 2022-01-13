@@ -33,7 +33,7 @@ module.exports = app => {
     callbackURL: 'http://localhost:3000/auth/facebook/callback',
     profileFields: ['email', 'displayName']
   }, (accessToken, refreshToken, profile, done) => {
-    console.log(profile) 
+    // console.log(profile)
       const { name , email } = profile._json
       USER.findOne({ email })
       .then(user => {
